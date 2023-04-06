@@ -14,5 +14,5 @@
 xcode-select --install
 ```
 
-* Windows: [MinGW](http://www.mingw.org/)에서 컴파일러를 환경을 설치하세요.
+* Windows: [MinGW](https://www.mingw-w64.org/)에서 컴파일러를 환경을 설치하세요.
 
