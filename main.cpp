@@ -8,8 +8,11 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
+bool isFillMode = true;
+
 void performDrawTriangle()
 {
+    glPolygonMode(GL_FRONT_AND_BACK, isFillMode ? GL_FILL : GL_LINE);
 }
 
 void processInput(GLFWwindow* window)
@@ -18,7 +21,11 @@ void processInput(GLFWwindow* window)
         glfwSetWindowShouldClose(window, true);
 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    {
+        isFillMode = !isFillMode;
         performDrawTriangle();
+    }
+
 }
 
 int main() {
