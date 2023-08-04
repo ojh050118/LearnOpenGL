@@ -18,5 +18,7 @@ file(COPY shaders DESTINATION ${CMAKE_BINARY_DIR})
 add_subdirectory(dependency/glfw)
 include_directories(include)
 link_directories(lib)
-add_executable(LearnOpenGL src/main.cpp src/glad.c src/shader_loader.cpp src/shader_loader.h)
+add_executable(LearnOpenGL src/main.cpp src/glad.c src/shader_loader.cpp src/shader_loader.h
+        src/glfw_window.cpp
+        src/glfw_window.h)
 target_link_libraries(LearnOpenGL ${GLFW})
