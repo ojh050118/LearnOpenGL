@@ -20,5 +20,8 @@ include_directories(include)
 link_directories(lib)
 add_executable(LearnOpenGL src/main.cpp src/glad.c src/shader_loader.cpp src/shader_loader.h
         src/glfw_window.cpp
-        src/glfw_window.h)
+        src/glfw_window.h
+        src/vertex.h
+        src/vector2.h
+        src/color4.h)
 target_link_libraries(LearnOpenGL ${GLFW})
