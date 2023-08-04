@@ -4,7 +4,7 @@
 
 class ShaderLoader {
 public:
-    std::string load_shader(bool isVertexShader, std::string name);
+    std::string LoadShader(bool isVertexShader, std::string name);
 };
 
 

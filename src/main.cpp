@@ -85,7 +85,7 @@ int main() {
 
     ShaderLoader shaders = ShaderLoader();
 
-    std::string vsSource = shaders.load_shader(true, "vertexShader");
+    std::string vsSource = shaders.LoadShader(true, "vertexShader");
     const char *vs = vsSource.c_str();
 
     // Vertex 쉐이더 준비
@@ -93,7 +93,7 @@ int main() {
     glShaderSource(vertexShader, 1, &vs, NULL);
     glCompileShader(vertexShader);
 
-    std::string fsSource = shaders.load_shader(false, "fragmentShader");
+    std::string fsSource = shaders.LoadShader(false, "fragmentShader");
     const char *fs = fsSource.c_str();
 
     // Fragment 쉐이더 준비
