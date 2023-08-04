@@ -1,7 +1,7 @@
 #include <iostream>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include "shader.h"
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
+#include "shader_loader.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -83,15 +83,33 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+    ShaderLoader shaders = ShaderLoader();
+
+    std::string vsSource = shaders.load_shader(true, "vertexShader");
+    const char *vs = vsSource.c_str();
+
     // Vertex 쉐이더 준비
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+    glShaderSource(vertexShader, 1, &vs, NULL);
     glCompileShader(vertexShader);
+
+    std::string fsSource = shaders.load_shader(false, "fragmentShader");
+    const char *fs = fsSource.c_str();
 
     // Fragment 쉐이더 준비
     unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+    glShaderSource(fragmentShader, 1, &fs, NULL);
     glCompileShader(fragmentShader);
+
+    int  success;
+    char infoLog[512];
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+
+    if(!success)
+    {
+        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+    }
 
     // 쉐이더 연결
     unsigned int shaderProgram = glCreateProgram();
