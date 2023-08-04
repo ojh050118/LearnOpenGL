@@ -18,6 +18,7 @@ public:
     void Close();
     bool Exists();
     void SetOnDraw(DrawCallback cb);
+    void Run();
 };
 
 

@@ -29,6 +29,9 @@ GLFWWindow::GLFWWindow(int glMajorVersion, int glMinorVersion) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, glMinorVersion);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
+    window = nullptr;
+    drawCallback = nullptr;
 }
 
 void GLFWWindow::Create(int width, int height, const char *title) {
@@ -49,8 +52,6 @@ void GLFWWindow::Create(int width, int height, const char *title) {
     }
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-    onDraw();
 }
 
 void GLFWWindow::Close() {
@@ -64,4 +65,8 @@ bool GLFWWindow::Exists() {
 
 void GLFWWindow::SetOnDraw(DrawCallback cb) {
     drawCallback = cb;
+}
+
+void GLFWWindow::Run() {
+    onDraw();
 }

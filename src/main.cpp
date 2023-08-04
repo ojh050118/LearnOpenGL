@@ -2,60 +2,9 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "shader_loader.h"
+#include "glfw_window.h"
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-    glViewport(0, 0, width, height);
-}
-
-bool isFillMode = true;
-
-void performDrawTriangle()
-{
-    glPolygonMode(GL_FRONT_AND_BACK, isFillMode ? GL_FILL : GL_LINE);
-}
-
-void processInput(GLFWwindow* window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-    {
-        isFillMode = !isFillMode;
-        performDrawTriangle();
-    }
-
-}
-
-int main() {
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-
-    GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
-
-    if (window == NULL)
-    {
-        std::cout << "Failed to create window" << std::endl;
-        glfwTerminate();
-
-        return -1;
-    }
-
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(1);
-
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return -1;
-    }
-
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
+void onDraw() {
     // 삼각형을 그려낼 정점들. (x, y, z) 순서.
     float vertices[] = {
             0.0f, 0.5f, 0.0f,
@@ -121,24 +70,19 @@ int main() {
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
-    while(!glfwWindowShouldClose(window))
-    {
-        // 입력 처리
-        processInput(window);
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 
-        // 렌더링
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+    glUseProgram(shaderProgram);
+    glBindVertexArray(VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+}
 
-        glUseProgram(shaderProgram);
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+int main() {
+    GLFWWindow window = GLFWWindow(3, 3);
+    window.SetOnDraw(onDraw);
+    window.Create(800, 600, "LearnOpenGL");
+    window.Run();
 
-        // 버퍼 스왑, 이벤트 처리
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
     return 0;
 }
