@@ -25,6 +25,8 @@ void onDraw() {
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), nullptr);
     glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof (float), (void*)offsetof(Vertex, Color));
+    glEnableVertexAttribArray(1);
 
     ShaderLoader shaders = ShaderLoader();
     std::string vsSource = shaders.LoadShader(true, "vertexShader");

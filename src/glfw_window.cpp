@@ -55,6 +55,7 @@ void GLFWWindow::Create(int width, int height, const char *title) {
 }
 
 void GLFWWindow::Close() {
+    glfwDestroyWindow(window);
     glfwSetWindowShouldClose(window, 1);
     glfwTerminate();
 }
