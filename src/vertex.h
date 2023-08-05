@@ -7,7 +7,8 @@
 struct Vertex {
 public:
     Vector2 Position = Vector2(0, 0);
-    Color4 Color = Color4(0, 0, 0, 0);
+    float Depth = 0;
+    Color4 Color = Color4(1, 1, 1, 1);
     Vertex(Vector2 pos, Color4 col) {
         Position = pos;
         Color = col;
