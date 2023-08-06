@@ -38,12 +38,15 @@ void onDraw() {
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof (float), (void*)offsetof(Vertex, Color));
     glEnableVertexAttribArray(1);
 
+    double time = glfwGetTime();
+
     Shader shader("vertexShader", "fragmentShader");
     shader.Use();
 
+    shader.SetFloat("time", (float)time);
+
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-    //glDrawArrays(GL_TRIANGLES, 0, sizeof(vertices) / sizeof(Vertex));
     glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
