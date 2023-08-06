@@ -1,7 +1,7 @@
 #include <iostream>
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
-#include "shader_loader.h"
+#include "shader.h"
 #include "glfw_window.h"
 #include "vertex.h"
 #include "vector2.h"
@@ -38,35 +38,14 @@ void onDraw() {
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof (float), (void*)offsetof(Vertex, Color));
     glEnableVertexAttribArray(1);
 
-    ShaderLoader shaders = ShaderLoader();
-    std::string vsSource = shaders.LoadShader(true, "vertexShader");
-    std::string fsSource = shaders.LoadShader(false, "fragmentShader");
-    const char *vs = vsSource.c_str();
-    const char *fs = fsSource.c_str();
+    Shader shader("vertexShader", "fragmentShader");
+    shader.Use();
 
-    unsigned int vertexShader, fragmentShader;
-    vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(vertexShader, 1, &vs, nullptr);
-    glShaderSource(fragmentShader, 1, &fs, nullptr);
-    glCompileShader(vertexShader);
-    glCompileShader(fragmentShader);
-
-    unsigned int shaderProgram;
-    shaderProgram = glCreateProgram();
-
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-
-    glUseProgram(shaderProgram);
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     //glDrawArrays(GL_TRIANGLES, 0, sizeof(vertices) / sizeof(Vertex));
     glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+    glBindVertexArray(0);
 }
 
 int main() {
