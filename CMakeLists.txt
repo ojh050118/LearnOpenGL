@@ -25,5 +25,6 @@ add_executable(LearnOpenGL src/main.cpp src/glad.c
         src/vector2.h
         src/color4.h
         src/shader.cpp
-        src/shader.h)
+        src/shader.h
+)
 target_link_libraries(LearnOpenGL ${GLFW})
